@@ -150,9 +150,12 @@ export default function Home() {
               onClick={handleSubmit}
               disabled={!typed}
             >
-              Generate PPT
+              {isLoading ? "Loading..." : "Generate PPT"}
             </button>
           </div>
+
+          {/* Error Message */}
+          {error && <p className="text-red-500 mt-4">{error}</p>}
         </main>
 
         <footer className="w-full bg-black bg-opacity-20 backdrop-blur-sm py-4">
