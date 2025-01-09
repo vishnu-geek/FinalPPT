@@ -60,7 +60,7 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8005/api/get-ticker", {
+      const response = await fetch("https://final-ppt-backend.vercel.app/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
