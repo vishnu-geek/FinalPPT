@@ -517,7 +517,7 @@ function Conclusion({
 
 async function getImage(_name: string) {
   const data = { stockName: _name };
-  const res = await fetch("https://final-ppt-backend.vercel.app/", {
+  const res = await fetch("https://final-ppt-be.vercel.app/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -530,7 +530,7 @@ async function getImage(_name: string) {
 
 async function dsc(_prompt: string) {
   const data = { prompt: _prompt };
-  const res = await fetch("https://final-ppt-backend.vercel.app/", {
+  const res = await fetch("https://final-ppt-be.vercel.app/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

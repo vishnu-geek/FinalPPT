@@ -25,7 +25,7 @@ export default function Page() {
         const fetchStockData = async (id: string) => {
           try {
             const response = await fetch(
-              `https://final-ppt-backend.vercel.app/`
+              `https://final-ppt-be.vercel.app/`
             );
             if (!response.ok) {
               throw new Error("Failed to fetch stock data");
