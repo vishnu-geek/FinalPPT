@@ -157,7 +157,7 @@ export default function Home() {
 
         <footer className="w-full bg-black bg-opacity-20 backdrop-blur-sm py-4">
           <div className="container mx-auto px-4 text-center text-sm">
-            © 2025 pptX. All rights reserved.
+            © 2025 StockGen. All rights reserved.
           </div>
         </footer>
       </div>
