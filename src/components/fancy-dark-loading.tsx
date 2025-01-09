@@ -33,7 +33,7 @@ export default function Component() {
           />
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-2xl font-bold text-blue-300">
-              {/* {Math.round(progress)}% */}
+              {Math.round(progress)}%
             </div>
           </div>
         </div>
@@ -41,12 +41,16 @@ export default function Component() {
         <p className="text-gray-400 mb-4">
           Preparing your presentation, This may take a while
         </p>
-        {/* <Progress value={progress} className="w-full h-2 bg-gray-700" /> */}
+        
+        {/* Use the Progress component here */}
+        <Progress value={progress} className="w-full h-2 bg-gray-700" />
+
         <style jsx>{`
           .progress-indicator {
             background-color: #8b5cf6;
           }
         `}</style>
+
         <div className="mt-8 space-y-2">
           <div className="h-2 w-full bg-black rounded-full overflow-hidden">
             <div
