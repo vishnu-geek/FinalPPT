@@ -8,6 +8,8 @@ app.use(express.json());
 
 app.use(cors({
   origin: 'https://stocks-generates.vercel.app/',  // Replace this with the actual frontend URL
+  methods: ['GET', 'POST'],
+  credentials:true
 }));
 
 app.post("/generate-image", async (req, res) => {

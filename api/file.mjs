@@ -8,7 +8,11 @@ const app = express();
 const port = 8000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://stocks-generates.vercel.app/',  // Replace this with the actual frontend URL
+  methods: ['GET', 'POST'],
+  credentials:true
+}));
 
 app.post("/generate-stock-report", async (req, res) => {
   const { ticker } = req.body;

@@ -10,6 +10,8 @@ const port = process.env.PORT || 8005;
 
 app.use(cors({
   origin: 'https://stocks-generates.vercel.app/',  // Replace this with the actual frontend URL
+  methods: ['GET', 'POST'],
+  credentials:true
 }));
 
 app.use(express.json());

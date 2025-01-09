@@ -9,7 +9,11 @@ const app = express();
 const PORT = process.env.PORT || 8002;
 
 app.use(express.json({ limit: "10mb" }));
-app.use(cors());
+app.use(cors({
+  origin: 'https://stocks-generates.vercel.app/',  // Replace this with the actual frontend URL
+  methods: ['GET', 'POST'],
+  credentials:true
+}));
 
 app.post("/api/extract-text", async (req, res) => {
   try {
