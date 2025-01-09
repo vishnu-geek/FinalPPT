@@ -60,7 +60,7 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://final-ppt-be.vercel.app/", {
+      const response = await fetch("https://finalppt.onrender.com", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
