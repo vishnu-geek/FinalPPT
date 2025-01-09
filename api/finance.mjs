@@ -7,7 +7,9 @@ const app = express();
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'https://stocks-generates.vercel.app/',  // Replace this with the actual frontend URL
+}));
 
 const formatLargeNumber = (num) => {
   if (num >= 1e12) return (num / 1e12).toFixed(2) + "T";

@@ -8,7 +8,9 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 8005;
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://stocks-generates.vercel.app/',  // Replace this with the actual frontend URL
+}));
 
 app.use(express.json());
 

@@ -5,7 +5,10 @@ require("dotenv").config();
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+app.use(cors({
+  origin: 'https://stocks-generates.vercel.app/',  // Replace this with the actual frontend URL
+}));
 
 app.post("/generate-image", async (req, res) => {
   const { stockName } = req.body;
