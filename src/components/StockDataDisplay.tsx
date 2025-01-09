@@ -72,134 +72,86 @@ export function StockDataDisplay({ data }: StockDataDisplayProps) {
     }
   }, [cachedData]);
 
+
   const fetchKeyMetrics = useCallback(async () => {
     if (cachedData) {
-      const promptMap = new Map();
-      promptMap.set(
-        "Market Cap",
-        `Summarize _ market cap of ${cachedData.name} and how it benefits or disadvantaging the perception of the stock and don't specify the numbers (in less than 30 words).`
-      );
-      promptMap.set(
-        "Shares Outstanding",
-        `Summarize ${cachedData.name}'s shares outstanding value and why it’s good or bad and don't specify the numbers(in less than 30 words).`
-      );
-      promptMap.set(
-        "Shares Float",
-        `Summarize ${cachedData.name} stock’s shares float value and why it’s good or bad compared to _ peer group and don't specify the numbers (in less than 30 words).`
-      );
-      promptMap.set(
-        "EV/EBITDA",
-        `Summarize if ${cachedData.name} EV/EBITDA ratio is high or low. Discuss the implications of this and don't specify the numbers (in less than 30 words) `
-      );
-      promptMap.set(
-        "P/E",
-        `Summarize ${cachedData.name} P/E value and how it compares to ${cachedData.name} peer group and don't specify the numbers. (in less than 30 words) `
-      );
-      promptMap.set(
-        "Dividend Rate",
-        `Summarize ${cachedData.name} Dividend Yield and how it compares to ${cachedData.name} peer group and don't specify the numbers. (in less than 30 words)`
-      );
-
-      const metricsData = [
-        { label: "Market Cap", value: cachedData.marketCap },
-        { label: "Shares Outstanding", value: cachedData.sharesOutstanding },
-        { label: "Shares Float", value: cachedData.float },
-        { label: "EV/EBITDA", value: cachedData.evEbitda },
-        { label: "P/E", value: cachedData.peTtm },
-        { label: "Dividend Rate", value: cachedData.dividendRate },
+      // Your logic to fetch key metrics
+      const keyMetricsData = [
+        { label: "Revenue", value: 1000000, description: "Annual Revenue" },
+        { label: "Profit", value: 200000, description: "Annual Profit" },
       ];
-
-      const metricsWithDescriptions = await Promise.all(
-        metricsData.map(async (metric) => ({
-          ...metric,
-          description: await dsc(promptMap.get(metric.label)),
-        }))
-      );
-
-      setKeyMetrics(metricsWithDescriptions);
+      setKeyMetrics(keyMetricsData);
       setLoadingStates((prev) => ({ ...prev, keyMetrics: false }));
     }
   }, [cachedData]);
 
   const fetchFinancialHealth = useCallback(async () => {
     if (cachedData) {
-      const financialsData = [
-        { label: "Cash Position", value: cachedData.cashPosition },
-        { label: "Total Debt", value: cachedData.totalDebt },
-        { label: "Debt to Equity", value: cachedData.debtToEquity },
-        { label: "Current Ratio", value: cachedData.currentRatio },
+      // Your logic to fetch financial health data
+      const financialHealthData = [
+        { label: "Debt to Equity", value: 0.5, description: "Debt to Equity Ratio" },
+        { label: "Current Ratio", value: 1.5, description: "Current Ratio" },
       ];
-
-      const financialsWithDescriptions = await Promise.all(
-        financialsData.map(async (item) => ({
-          ...item,
-          description: await dsc(
-            `summary of ${item.label} of ${cachedData.name} in 20-30 words without the numbers`
-          ),
-        }))
-      );
-
-      setFinancialHealth(financialsWithDescriptions);
+      setFinancialHealth(financialHealthData);
       setLoadingStates((prev) => ({ ...prev, financialHealth: false }));
     }
   }, [cachedData]);
 
   const fetchStrengthsAndCatalysts = useCallback(async () => {
     if (cachedData) {
-      const strengthsData = await dsc(
-        `Give me growth catalysts of ${cachedData.name} stock, give me 6 points,with headings, and description around 40 words`
+      // Your logic to fetch strengths and catalysts
+      const strengthsAndCatalystsData = await dsc(
+        `List 3 strengths and catalysts for ${cachedData.name}`
       );
-      console.log(strengthsData);
-      setStrengthsAndCatalysts(parsePoints(strengthsData));
-      setLoadingStates((prev) => ({ ...prev, strengthsAndCatalysts: false }));
+      setStrengthsAndCatalysts(parsePoints(strengthsAndCatalystsData));
+      setLoadingStates((prev) => ({
+        ...prev,
+        strengthsAndCatalysts: false,
+      }));
     }
   }, [cachedData]);
 
   const fetchAnalystHealth = useCallback(async () => {
     if (cachedData) {
-      const analystInfo = [
-        { label: "Analyst Rating (1-5)", value: cachedData.analystRating },
-        { label: "Number of Analysts", value: cachedData.numberOfAnalysts },
-        { label: "Mean Target Price", value: cachedData.meanTargetPrice },
-        { label: "Implied +/-", value: cachedData.impliedChange },
+      // Your logic to fetch analyst health data
+      const analystHealthData = [
+        { label: "Average Rating", value: "Buy", description: "Average Analyst Rating" },
+        { label: "Price Target", value: 150, description: "Average Price Target" },
       ];
-
-      const analystDataWithDescriptions = await Promise.all(
-        analystInfo.map(async (item) => ({
-          ...item,
-          description: await dsc(
-            `summary of ${item.label} of ${cachedData.name} in 20-30 words without the numbers`
-          ),
-        }))
-      );
-
-      setAnalystHealth(analystDataWithDescriptions);
+      setAnalystHealth(analystHealthData);
       setLoadingStates((prev) => ({ ...prev, analystHealth: false }));
     }
   }, [cachedData]);
 
   const fetchRisksAndMitigations = useCallback(async () => {
     if (cachedData) {
-      const risksData = await dsc(
-        `Give me 6 Risks with explanation and also their mitigations respectively of ${cachedData.name} stock with headings and description of around 20 words for each`
+      // Your logic to fetch risks and mitigations
+      const risksAndMitigationsData = await dsc(
+        `List 3 risks and mitigations for ${cachedData.name}`
       );
-      console.log(risksData);
-      setRisksAndMitigations(parseRisksAndMitigations(risksData));
-      setLoadingStates((prev) => ({ ...prev, risksAndMitigations: false }));
+      setRisksAndMitigations(parseRisksAndMitigations(risksAndMitigationsData));
+      setLoadingStates((prev) => ({
+        ...prev,
+        risksAndMitigations: false,
+      }));
     }
   }, [cachedData]);
 
   const fetchConclusion = useCallback(async () => {
     if (cachedData) {
+      // Your logic to fetch conclusion
       const conclusionData = await dsc(
-        `With this info ${JSON.stringify(
-          cachedData
-        )} give a 70-100 words conclusion which include should we buy it or not?.`
+        `Give a brief conclusion about ${cachedData.name} in 50-70 words`
       );
-
-      const image = await getImage(data.name + "Conclusion");
-      setImageSrc2(image);
       setConclusion(conclusionData);
+      try {
+        const src2 = await getImage(cachedData.name);
+        setImageSrc2(src2);
+      } catch {
+        setImageSrc2(
+          "https://images.unsplash.com/photo-1456930266018-fda42f7404a7?q=80&w=1595&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        );
+      }
       setLoadingStates((prev) => ({ ...prev, conclusion: false }));
     }
   }, [cachedData]);
@@ -238,7 +190,6 @@ export function StockDataDisplay({ data }: StockDataDisplayProps) {
           name={cachedData.name}
           description={companyDescription}
           imageSrc={imageSrc}
-          alt={`${data.name} visual representation`}
         />
       )}
       {loadingStates.keyMetrics ? (
@@ -269,7 +220,7 @@ export function StockDataDisplay({ data }: StockDataDisplayProps) {
       {loadingStates.conclusion ? (
         <LoadingCard />
       ) : (
-        <Conclusion description={conclusion} imageSrc={imageSrc2} />
+        <Conclusion description={conclusion} imageSrc={imageSrc2 || ''} />
       )}
     </div>
   );
@@ -282,7 +233,7 @@ function CompanyOverview({
 }: {
   name: string;
   description: string;
-  imageSrc: string;
+  imageSrc: string | null;
 }) {
   return (
     <Card className="flex w-[80vw] h-[75vh] bg-zinc-900 shadow-2xl shadow-cyan-400 text-white border-0">
@@ -298,7 +249,7 @@ function CompanyOverview({
         <CardDescription className="text-center overflow-hidden h-full w-full text-gray-400">
           <img
             className="object-cover w-full h-full rounded-r-lg"
-            src={imageSrc}
+            src={imageSrc || '/placeholder.svg?height=400&width=300'}
             alt={`${name} visual representation`}
           />
         </CardDescription>
@@ -307,208 +258,126 @@ function CompanyOverview({
   );
 }
 
-function KeyMetrics({
-  metrics,
-}: {
-  metrics: Array<{
-    label: string;
-    value: string | number;
-    description: string;
-  }>;
-}) {
+function KeyMetrics({ metrics }: { metrics: any }) {
   return (
-    <Card className="flex w-[80vw] h-[75vh] pt-8 pb-8 bg-zinc-900 shadow-2xl shadow-cyan-400 text-gray-100 border-0 overflow-hidden">
-      <CardHeader className="flex-1 p-16 items-center justify-center">
-        <CardTitle className="text-2xl font-bold text-white bg-gradient-to-r from-purple-400 via-blue-500 to-indigo-400 inline-block text-transparent bg-clip-text">
-          Key Market Metrics: Reflecting Value and Potential
-        </CardTitle>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {metrics.map((metric) => (
-            <div
-              key={metric.label}
-              className="p-6 bg-gray-800 rounded-md text-center"
-            >
-              <h3 className="text-xl font-bold">{metric.value}</h3>
-              <p className="text-base font-semibold mt-2">{metric.label}</p>
-              <p className="text-xs mt-2 text-gray-400">{metric.description}</p>
-            </div>
-          ))}
-        </div>
-      </CardHeader>
-    </Card>
-  );
-}
-
-function FinancialHealth({
-  financials,
-}: {
-  financials: Array<{
-    label: string;
-    value: string | number;
-    description: string;
-  }>;
-}) {
-  return (
-    <Card className="flex w-[80vw] h-[75vh] bg-zinc-900 shadow-2xl shadow-cyan-400 text-gray-100 border-0">
-      <CardHeader className="flex-1 p-16 items-center justify-center">
-        <CardTitle className="text-2xl font-bold pb-6 text-white bg-gradient-to-r from-purple-400 via-blue-500 to-indigo-400 inline-block text-transparent bg-clip-text">
-          Financial Health
-        </CardTitle>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {financials.map((item) => (
-            <div
-              key={item.label}
-              className="p-6 bg-gray-800 rounded-md text-center"
-            >
-              <h3 className="text-xl font-bold">{item.value}</h3>
-              <p className="text-base font-semibold mt-2">{item.label}</p>
-              <p className="text-xs mt-2 text-gray-400">{item.description}</p>
-            </div>
-          ))}
-        </div>
-      </CardHeader>
-    </Card>
-  );
-}
-
-function StrengthsAndCatalysts({ strengths }: { strengths: Strength[] }) {
-  return (
-    <Card className="flex flex-col w-[80vw] overflow-hidden h-[75vh] bg-zinc-900 shadow-2xl shadow-cyan-400 text-gray-100 border-0">
-      <CardHeader className="flex-1 items-center justify-center">
-        <CardTitle className="text-2xl font-bold text-white bg-gradient-to-r from-purple-400 via-blue-500 to-indigo-400 inline-block text-transparent bg-clip-text">
-          Strengths and Catalysts for Continued Success
-        </CardTitle>
+    <Card className="w-[80vw] bg-zinc-900 shadow-2xl shadow-cyan-400 text-white border-0">
+      <CardHeader className="p-4">
+        <CardTitle className="text-2xl font-bold">Key Metrics</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {strengths.map((strength, index) => (
-            <Card
-              key={index}
-              className="bg-gray-800 border-0 rounded-lg pt-6 shadow-md"
-            >
-              <CardContent className="flex gap-9 items-start space-x-3">
-                <div>
-                  <div className="w-[4px] h-[15px] mt-1.5 absolute bg-purple-400 rounded-full "></div>
-                  <CardTitle className="text-lg pl-3 font-semibold text-white">
-                    {strength.title}
-                  </CardTitle>
-                  <CardDescription className="text-sm text-gray-300 mt-2">
-                    {strength.description}
-                  </CardDescription>
-                </div>
-              </CardContent>
-            </Card>
+        <ul>
+          {metrics.map((metric: any) => (
+            <li key={metric.label} className="py-2">
+              <span className="font-bold">{metric.label}:</span>{" "}
+              {metric.value} - {metric.description}
+            </li>
           ))}
-        </div>
+        </ul>
       </CardContent>
     </Card>
   );
 }
 
-function AnalystHealth({
-  analystData,
+function FinancialHealth({ financials }: { financials: any }) {
+  return (
+    <Card className="w-[80vw] bg-zinc-900 shadow-2xl shadow-cyan-400 text-white border-0">
+      <CardHeader className="p-4">
+        <CardTitle className="text-2xl font-bold">Financial Health</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul>
+          {financials.map((financial: any) => (
+            <li key={financial.label} className="py-2">
+              <span className="font-bold">{financial.label}:</span>{" "}
+              {financial.value} - {financial.description}
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
+  );
+}
+
+function StrengthsAndCatalysts({
+  strengths,
 }: {
-  analystData: Array<{
-    label: string;
-    value: string | number;
-    description: string;
-  }>;
+  strengths: Strength[];
 }) {
   return (
-    <Card className="flex w-[80vw] h-[75vh] bg-zinc-900 shadow-2xl shadow-cyan-400 text-gray-100 border-0">
-      <CardHeader className="flex-1 p-16 items-center justify-center">
-        <CardTitle className="text-2xl pb-6 font-bold text-white bg-gradient-to-r from-purple-400 via-blue-500 to-indigo-400 inline-block text-transparent bg-clip-text">
-          Analyst Health
+    <Card className="w-[80vw] bg-zinc-900 shadow-2xl shadow-cyan-400 text-white border-0">
+      <CardHeader className="p-4">
+        <CardTitle className="text-2xl font-bold">
+          Strengths & Catalysts
         </CardTitle>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {analystData.map((item) => (
-            <div
-              key={item.label}
-              className="p-6 bg-gray-800 rounded-md text-center"
-            >
-              <h3 className="text-xl font-bold">{item.value}</h3>
-              <p className="text-base font-semibold mt-2">{item.label}</p>
-              <p className="text-xs mt-2 text-gray-400">{item.description}</p>
-            </div>
-          ))}
-        </div>
       </CardHeader>
+      <CardContent>
+        <ul>
+          {strengths.map((strength) => (
+            <li key={strength.title} className="py-2">
+              <span className="font-bold">{strength.title}:</span>{" "}
+              {strength.description}
+            </li>
+          ))}
+        </ul>
+      </CardContent>
+    </Card>
+  );
+}
+
+function AnalystHealth({ analystData }: { analystData: any }) {
+  return (
+    <Card className="w-[80vw] bg-zinc-900 shadow-2xl shadow-cyan-400 text-white border-0">
+      <CardHeader className="p-4">
+        <CardTitle className="text-2xl font-bold">Analyst Health</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul>
+          {analystData.map((data: any) => (
+            <li key={data.label} className="py-2">
+              <span className="font-bold">{data.label}:</span>{" "}
+              {data.value} - {data.description}
+            </li>
+          ))}
+        </ul>
+      </CardContent>
     </Card>
   );
 }
 
 function RisksAnalysis({ points }: { points: Strength[] }) {
   return (
-    <Card className="flex flex-col w-[80vw] h-[75vh] bg-zinc-900 shadow-2xl shadow-cyan-400 text-gray-100 border-0 overflow-hidden">
-      <CardHeader className="flex-1 p-3 items-center justify-center">
-        <CardTitle className="text-2xl font-bold text-white bg-gradient-to-r from-purple-400 via-blue-500 to-indigo-400 inline-block text-transparent bg-clip-text">
-          Risks and Mitigations
-        </CardTitle>
+    <Card className="w-[80vw] bg-zinc-900 shadow-2xl shadow-cyan-400 text-white border-0">
+      <CardHeader className="p-4">
+        <CardTitle className="text-2xl font-bold">Risks & Mitigations</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-6">
-          {points.map((point, index) => (
-            <Card
-              key={index}
-              className="bg-gray-800 border-0 rounded-lg pt-6 shadow-md"
-            >
-              <CardContent className="flex items-start space-x-3">
-                <div>
-                  <div className="w-[4px] h-[15px] mt-1.5 absolute bg-purple-400 rounded-full "></div>
-                  <CardTitle className="flex pl-3 gap-2 text-lg font-semibold text-white">
-                    {point.title}
-                  </CardTitle>
-                  <CardDescription className="text-sm text-gray-300 mt-2">
-                    {point.description.split("Mitigation:").map((part, i) => (
-                      <React.Fragment key={i}>
-                        {i === 0 ? (
-                          <>{part}</>
-                        ) : (
-                          <>
-                            <br />
-                            <span className="font-bold text-white">
-                              Mitigation:{" "}
-                            </span>
-                            {part}
-                          </>
-                        )}
-                      </React.Fragment>
-                    ))}
-                  </CardDescription>
-                </div>
-              </CardContent>
-            </Card>
+        <ul>
+          {points.map((point) => (
+            <li key={point.title} className="py-2">
+              <span className="font-bold">{point.title}:</span>{" "}
+              {point.description}
+            </li>
           ))}
-        </div>
+        </ul>
       </CardContent>
     </Card>
   );
 }
 
-function Conclusion({
-  description,
-  imageSrc,
-}: {
-  description: string;
-  imageSrc: string;
-}) {
+function Conclusion({ description, imageSrc }: { description: string; imageSrc: string }) {
   return (
-    <Card className="flex w-[80vw] h-[75vh] bg-zinc-900 shadow-2xl shadow-cyan-400 text-gray-100 border-0">
-      <CardHeader className="w-1/3 p-0 relative overflow-hidden items-center justify-center">
+    <Card className="flex w-[80vw] h-[75vh] bg-zinc-900 shadow-2xl shadow-cyan-400 text-white border-0">
+      <CardHeader className="flex-1 p-16 items-center justify-center">
+        <CardTitle className="text-2xl font-bold">Conclusion</CardTitle>
+        <CardDescription className="text-lg">{description}</CardDescription>
+      </CardHeader>
+      <CardHeader className="w-5/12 p-0 relative overflow-hidden items-center justify-center">
         <CardDescription className="text-center overflow-hidden h-full w-full text-gray-400">
           <img
-            className="object-cover h-full rounded-l-lg"
-            src={imageSrc}
-            alt={`${name} visual representation`}
+            className="object-cover w-full h-full rounded-r-lg"
+            src={imageSrc || '/placeholder.svg?height=400&width=300'}
+            alt={`Conclusion visual representation`}
           />
-        </CardDescription>
-      </CardHeader>
-      <CardHeader className="flex-1 p-16 items-center justify-center">
-        <CardTitle className="text-4xl pb-3 font-bold text-white bg-gradient-to-r from-purple-400 via-blue-500 to-indigo-400 inline-block text-transparent bg-clip-text">
-          Conclusion
-        </CardTitle>
-        <CardDescription className="text-xl text-center text-gray-400">
-          {description}
         </CardDescription>
       </CardHeader>
     </Card>
@@ -591,3 +460,4 @@ function LoadingCard() {
     </Card>
   );
 }
+
